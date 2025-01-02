@@ -44,7 +44,7 @@ const plans = [
 
 export function PricingSection() {
   return (
-    <section className="py-20 bg-slate-50 dark:bg-slate-900/50">
+    <section className="py-20 bg-slate-50 dark:bg-[#111113]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Planos e Preços</h2>
@@ -58,7 +58,7 @@ export function PricingSection() {
           {plans.map((plan) => (
             <Card
               key={plan.name}
-              className={`relative ${
+              className={`relative bg-gradient-to-br from-purple-600 to-blue-500 ${
                 plan.popular ? "border-primary shadow-lg" : ""
               }`}
             >

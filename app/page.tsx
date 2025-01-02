@@ -19,13 +19,13 @@ export default function Home() {
     <main className="flex-1">
       <SiteHeader />
       {/* Hero Section */}
-      <section className="gradient-bg">
+      <section className="bg-gradient-to-br from-purple-600 to-blue-500 overflow-hidden">
         <div className="container mx-auto px-4 pt-24 pb-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-left space-y-6">
               <h1 className="text-5xl font-bold tracking-tight">
                 Controle suas assinaturas. Economize{" "}
-                <span className="text-lime-700">dinheiro.</span>
+                <span className="text-slate-700">dinheiro.</span>
               </h1>
               <p className="text-xl text-muted-foreground max-w-xl">
                 Descubra, organize e otimize todos os seus serviços de
@@ -41,14 +41,13 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <div className="relative">
-              <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-4">
+            <div className="mb-[-100px] relative flex">
                 <img
-                  src="/dashboard-preview.png"
+                  src="https://i.imgur.com/N2Ky2Wh.png"
                   alt="Dashboard Preview"
                   className="rounded-xl w-full"
                 />
-              </div>
+                <img src="https://i.imgur.com/Y4SkeOq.png" alt="Dashboard Previw Phone" className="absolute mt-[50px] ml-[-100px]" />
             </div>
           </div>
         </div>
@@ -111,7 +110,7 @@ export default function Home() {
       <PricingSection />
 
       {/* CTA Section */}
-      <section className="gradient-bg py-20">
+      <section className="py-20">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-6">
             Comece a Transformar seu Processo de Assinaturas

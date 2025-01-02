@@ -17,7 +17,7 @@ export function IntegrationSection() {
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
-        <Card className="bg-accent/5 border-accent/20">
+        <Card className="bg-[#111113] border-accent/20">
           <CardContent className="p-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
