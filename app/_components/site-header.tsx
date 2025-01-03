@@ -9,7 +9,7 @@ export function SiteHeader() {
       <div className="container flex h-14 items-center justify-between">
         <div className="flex items-center space-x-2">
           <FileSignature className="h-6 w-6 text-primary" />
-          <span className="font-semibold">AssineJá</span>
+          <span className="font-semibold">SubWise</span>
         </div>
         <ThemeToggle />
       </div>

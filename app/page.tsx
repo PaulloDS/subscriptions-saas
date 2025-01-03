@@ -27,7 +27,7 @@ export default function Home() {
                 Controle suas assinaturas. Economize{" "}
                 <span className="text-slate-700">dinheiro.</span>
               </h1>
-              <p className="text-xl text-muted-foreground max-w-xl">
+              <p className="text-xl text-gray-200 max-w-xl">
                 Descubra, organize e otimize todos os seus serviços de
                 assinatura em um só lugar. SubWise ajuda você a gastar menos e
                 aproveitar mais.
@@ -42,12 +42,16 @@ export default function Home() {
               </div>
             </div>
             <div className="mb-[-100px] relative flex">
-                <img
-                  src="https://i.imgur.com/N2Ky2Wh.png"
-                  alt="Dashboard Preview"
-                  className="rounded-xl w-full"
-                />
-                <img src="https://i.imgur.com/Y4SkeOq.png" alt="Dashboard Previw Phone" className="absolute mt-[50px] ml-[-100px]" />
+              <img
+                src="https://i.imgur.com/N2Ky2Wh.png"
+                alt="Dashboard Preview"
+                className="rounded-xl w-full"
+              />
+              <img
+                src="https://i.imgur.com/Y4SkeOq.png"
+                alt="Dashboard Previw Phone"
+                className="absolute mt-[50px] ml-[-100px]"
+              />
             </div>
           </div>
         </div>

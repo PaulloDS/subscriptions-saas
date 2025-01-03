@@ -1,14 +1,23 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Overview } from "@/components/overview"
-import { RecentSubscriptions } from "@/components/recent-subscriptions"
-import { SubscriptionPieChart } from "@/components/subscription-pie-chart"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Overview } from "@/components/overview";
+import { RecentSubscriptions } from "@/components/recent-subscriptions";
+import { SubscriptionPieChart } from "@/components/subscription-pie-chart";
+import { PredictionChart } from "@/components/prediction-chart";
 
 export default function ReportsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Relatórios</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+          Relatórios
+        </h1>
         <p className="text-muted-foreground">
           Analise seus gastos e veja insights sobre suas assinaturas.
         </p>
@@ -24,7 +33,9 @@ export default function ReportsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Gastos Mensais</CardTitle>
-              <CardDescription>Seus gastos com assinaturas nos últimos 6 meses</CardDescription>
+              <CardDescription>
+                Seus gastos com assinaturas nos últimos 6 meses
+              </CardDescription>
             </CardHeader>
             <CardContent className="h-[400px]">
               <Overview />
@@ -43,7 +54,9 @@ export default function ReportsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Gastos por Categoria</CardTitle>
-              <CardDescription>Distribuição de seus gastos por categoria</CardDescription>
+              <CardDescription>
+                Distribuição de seus gastos por categoria
+              </CardDescription>
             </CardHeader>
             <CardContent className="h-[400px]">
               <SubscriptionPieChart />
@@ -54,15 +67,16 @@ export default function ReportsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Previsão de Gastos</CardTitle>
-              <CardDescription>Estimativa de gastos para os próximos 6 meses</CardDescription>
+              <CardDescription>
+                Estimativa de gastos para os próximos 6 meses
+              </CardDescription>
             </CardHeader>
-            <CardContent>
-              <p>Implementação futura: gráfico de previsão de gastos</p>
+            <CardContent className="h-[400px]">
+              <PredictionChart />
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
-
