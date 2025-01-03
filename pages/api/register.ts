@@ -29,11 +29,14 @@ export default async function handler(
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const existingUsers = await prisma.user.count();
+
     const user = await prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
+        isHeadOfFamily: existingUsers === 0, // First user becomes head of family
       },
     });
 

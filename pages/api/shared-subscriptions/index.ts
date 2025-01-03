@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -9,39 +9,73 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const session = await getSession({ req });
+  try {
+    const session = await getServerSession(req, res, authOptions);
 
-  if (!session) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-
-  if (req.method === "GET") {
-    try {
-      const sharedSubscriptions = await prisma.sharedSubscription.findMany({
-        where: { userId: session.user?.id },
-        include: { subscription: true },
-      });
-      res.status(200).json(sharedSubscriptions);
-    } catch (error) {
-      res.status(500).json({ message: "Error fetching shared subscriptions" });
+    if (!session || !session.user || !session.user.id) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
-  } else if (req.method === "POST") {
-    const { subscriptionId, userId, sharePercentage } = req.body;
 
-    try {
-      const sharedSubscription = await prisma.sharedSubscription.create({
-        data: {
-          subscriptionId,
-          userId,
-          sharePercentage: parseFloat(sharePercentage),
+    if (req.method !== "GET") {
+      return res.status(405).json({ message: "Method not allowed" });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      include: {
+        sharedSubscriptions: {
+          include: {
+            subscription: true,
+          },
         },
-      });
-      res.status(201).json(sharedSubscription);
-    } catch (error) {
-      res.status(500).json({ message: "Error creating shared subscription" });
+        familyHead: {
+          include: {
+            sharedSubscriptions: {
+              include: {
+                subscription: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-  } else {
-    res.setHeader("Allow", ["GET", "POST"]);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+
+    const sharedSubscriptions = user.isHeadOfFamily
+      ? user.sharedSubscriptions
+      : user.familyHead
+      ? user.familyHead.sharedSubscriptions
+      : [];
+
+    const formattedSubscriptions = await Promise.all(
+      sharedSubscriptions.map(async (shared) => {
+        const allShares = await prisma.sharedSubscription.findMany({
+          where: { subscriptionId: shared.subscriptionId },
+          include: { user: true },
+        });
+
+        return {
+          id: shared.subscription.id,
+          name: shared.subscription.name,
+          totalCost: shared.subscription.price,
+          yourShare: shared.subscription.price * (shared.sharePercentage / 100),
+          members: allShares.map((s) => ({
+            id: s.user.id,
+            name: s.user.name,
+            sharePercentage: s.sharePercentage,
+          })),
+        };
+      })
+    );
+
+    res.status(200).json(formattedSubscriptions);
+  } catch (error) {
+    console.error("Error in /api/shared-subscriptions:", error);
+    res.status(500).json({ message: "Internal server error" });
+  } finally {
+    await prisma.$disconnect();
   }
 }

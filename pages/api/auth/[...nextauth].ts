@@ -6,7 +6,6 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
-  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -40,6 +39,7 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           email: user.email,
           name: user.name,
+          isHeadOfFamily: user.isHeadOfFamily,
         };
       },
     }),
@@ -48,12 +48,14 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.isHeadOfFamily = user.isHeadOfFamily;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.isHeadOfFamily = token.isHeadOfFamily as boolean;
       }
       return session;
     },
